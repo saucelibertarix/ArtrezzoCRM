@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-jul-2019 15:40:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.LineasFactMaterial" table="lineas_fact_material" catalog="artezzo" optimistic-lock="version">
+        <id name="factMaterialId" type="java.lang.Integer">
+            <column name="fact_material_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="factura" class="Modelo.Factura" fetch="select">
+            <column name="factura" not-null="true" />
+        </many-to-one>
+        <many-to-one name="material" class="Modelo.Material" fetch="select">
+            <column name="referencia" not-null="true" />
+        </many-to-one>
+        <property name="concepto" type="string">
+            <column name="concepto" length="60" not-null="true" />
+        </property>
+        <property name="precio" type="double">
+            <column name="precio" not-null="true" />
+        </property>
+        <property name="cantidad" type="int">
+            <column name="cantidad" not-null="true" />
+        </property>
+        <property name="totalLinea" type="double">
+            <column name="total_linea" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

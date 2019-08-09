@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-jul-2019 15:40:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Cliente" table="cliente" catalog="artezzo" optimistic-lock="version">
+        <id name="clienteId" type="java.lang.Integer">
+            <column name="cliente_id" />
+            <generator class="identity" />
+        </id>
+        <property name="dniCif" type="string">
+            <column name="dni_cif" length="10" not-null="true" unique="true" />
+        </property>
+        <property name="clienteNombre" type="string">
+            <column name="cliente_nombre" length="30" not-null="true" />
+        </property>
+        <property name="clienteTelefono" type="int">
+            <column name="cliente_telefono" not-null="true" />
+        </property>
+        <property name="clienteDireccion" type="string">
+            <column name="cliente_direccion" length="60" not-null="true" />
+        </property>
+        <set name="facturas" table="factura" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cliente" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.Factura" />
+        </set>
+        <set name="presupuestos" table="presupuesto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cliente" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.Presupuesto" />
+        </set>
+    </class>
+</hibernate-mapping>

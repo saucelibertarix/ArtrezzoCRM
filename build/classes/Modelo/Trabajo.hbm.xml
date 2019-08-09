@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-jul-2019 15:40:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Trabajo" table="trabajo" catalog="artezzo" optimistic-lock="version">
+        <id name="trabajoId" type="java.lang.Integer">
+            <column name="trabajo_id" />
+            <generator class="identity" />
+        </id>
+        <property name="trabajoNombre" type="string">
+            <column name="trabajo_nombre" length="30" not-null="true" />
+        </property>
+        <property name="trabajoDescripcion" type="string">
+            <column name="trabajo_despripcion" length="65535" not-null="true" />
+        </property>
+        <property name="precioHora" type="double">
+            <column name="precio_hora" not-null="true" />
+        </property>
+        <set name="lineaPresTrabajos" table="linea_pres_trabajo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="referencia" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.LineaPresTrabajo" />
+        </set>
+        <set name="lineasFactTrabajos" table="lineas_fact_trabajo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="referencia" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.LineasFactTrabajo" />
+        </set>
+    </class>
+</hibernate-mapping>

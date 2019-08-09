@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-jul-2019 15:40:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Proveedor" table="proveedor" catalog="artezzo" optimistic-lock="version">
+        <id name="proveedorId" type="java.lang.Integer">
+            <column name="proveedor_id" />
+            <generator class="identity" />
+        </id>
+        <property name="cif" type="string">
+            <column name="cif" length="20" not-null="true" unique="true" />
+        </property>
+        <property name="proveedorNombre" type="string">
+            <column name="proveedor_nombre" length="40" not-null="true" />
+        </property>
+        <property name="proveedorTelefono" type="int">
+            <column name="proveedor_telefono" not-null="true" />
+        </property>
+        <property name="proveedorDireccion" type="string">
+            <column name="proveedor_direccion" length="60" not-null="true" />
+        </property>
+        <set name="materials" table="material" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="proveedor" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.Material" />
+        </set>
+    </class>
+</hibernate-mapping>

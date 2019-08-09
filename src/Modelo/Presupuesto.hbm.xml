@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-jul-2019 15:40:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Presupuesto" table="presupuesto" catalog="artezzo" optimistic-lock="version">
+        <id name="presupuestoId" type="java.lang.Integer">
+            <column name="presupuesto_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="Modelo.Cliente" fetch="select">
+            <column name="cliente" not-null="true" />
+        </many-to-one>
+        <property name="presupuestoTrabajo" type="string">
+            <column name="presupuesto_trabajo" length="60" not-null="true" unique="true" />
+        </property>
+        <property name="presupuestoTotal" type="double">
+            <column name="presupuesto_total" not-null="true" />
+        </property>
+        <set name="lineaPresTrabajos" table="linea_pres_trabajo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="presupuesto" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.LineaPresTrabajo" />
+        </set>
+        <set name="lineaPresMaterials" table="linea_pres_material" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="presupuesto" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.LineaPresMaterial" />
+        </set>
+    </class>
+</hibernate-mapping>

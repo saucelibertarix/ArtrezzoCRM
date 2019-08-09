@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-jul-2019 15:40:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Factura" table="factura" catalog="artezzo" optimistic-lock="version">
+        <id name="facturaId" type="java.lang.Integer">
+            <column name="factura_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="Modelo.Cliente" fetch="select">
+            <column name="cliente" not-null="true" />
+        </many-to-one>
+        <property name="facturaTrabajo" type="string">
+            <column name="factura_trabajo" length="60" not-null="true" />
+        </property>
+        <property name="facturaTotal" type="double">
+            <column name="factura_total" not-null="true" />
+        </property>
+        <set name="lineasFactMaterials" table="lineas_fact_material" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="factura" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.LineasFactMaterial" />
+        </set>
+        <set name="lineasFactTrabajos" table="lineas_fact_trabajo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="factura" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.LineasFactTrabajo" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 25-jul-2019 15:40:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Modelo.Material" table="material" catalog="artezzo" optimistic-lock="version">
+        <id name="materialRef" type="java.lang.Integer">
+            <column name="material_ref" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="proveedor" class="Modelo.Proveedor" fetch="select">
+            <column name="proveedor" not-null="true" />
+        </many-to-one>
+        <property name="materialNombre" type="string">
+            <column name="material_nombre" length="30" not-null="true" />
+        </property>
+        <property name="materialComentario" type="string">
+            <column name="material_comentario" length="65535" not-null="true" />
+        </property>
+        <property name="materialPrecio" type="double">
+            <column name="material_precio" not-null="true" />
+        </property>
+        <set name="lineasFactMaterials" table="lineas_fact_material" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="referencia" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.LineasFactMaterial" />
+        </set>
+        <set name="lineaPresMaterials" table="linea_pres_material" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="referencia" not-null="true" />
+            </key>
+            <one-to-many class="Modelo.LineaPresMaterial" />
+        </set>
+    </class>
+</hibernate-mapping>
