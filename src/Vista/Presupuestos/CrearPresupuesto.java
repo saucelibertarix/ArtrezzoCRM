@@ -19,19 +19,15 @@ import Modelo.Presupuesto;
 import Modelo.Trabajo;
 import Reportes.ReportePresupuesto;
 import java.io.File;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -608,9 +604,9 @@ public class CrearPresupuesto extends javax.swing.JFrame {
             ReportePresupuesto reporte = new ReportePresupuesto(linea.getConcepto(),linea.getPrecio(), linea.getCantidad(), linea.getTotalLinea());
             lista.add(reporte);
         }
-        
+        File file = new File("C:\\Users\\USUARIO\\Documents\\NetBeansProjects\\ArtrezzoCRM\\src\\Reportes\\ReportePresupuesto.jasper");
         try{
-            JasperReport reporte = (JasperReport) JRLoader.loadObject(ClassLoader.getSystemResource("src\\Reportes\\ReportePresupuesto.jasper"));
+            JasperReport reporte = (JasperReport) JRLoader.loadObject(file);//JasperCompileManager.compileReport("src/Reportes/ReportePresupuesto.jrxml");
             JasperPrint  print = JasperFillManager.fillReport(reporte, null, new JRBeanCollectionDataSource(lista));
             JasperViewer view = new JasperViewer(print, false);
             view.setVisible(true);

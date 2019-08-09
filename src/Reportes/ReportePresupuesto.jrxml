@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b9383500-c490-4b20-9002-d9f3e2213d08">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="48"/>
 	<field name="presupuestoId" class="java.lang.String"/>
 	<field name="nombreCliente" class="java.lang.String"/>
 	<field name="dniCifCliente" class="java.lang.String"/>
@@ -21,13 +21,10 @@
 	</background>
 	<title>
 		<band height="126" splitType="Stretch">
-			<staticText>
-				<reportElement x="-1" y="102" width="101" height="23" uuid="07ae2999-1a22-41fa-bdcc-dcf8bb246761"/>
-				<textElement verticalAlignment="Middle">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Presupuesto:]]></text>
-			</staticText>
+			<image>
+				<reportElement x="0" y="1" width="128" height="125" uuid="575f6e72-cad4-4b33-a8d5-6fca5e55b4eb"/>
+				<imageExpression><![CDATA["C:\\Users\\USUARIO\\Documents\\NetBeansProjects\\ArtrezzoCRM\\src\\Vista\\Imagenes\\artezzoblanco.jpg"]]></imageExpression>
+			</image>
 			<textField>
 				<reportElement x="100" y="103" width="248" height="23" uuid="2e7a7e00-2622-4b43-8e61-23a2aff8b824"/>
 				<textElement verticalAlignment="Middle">
@@ -35,6 +32,30 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{presupuestoNombre}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="0" y="103" width="101" height="23" uuid="07ae2999-1a22-41fa-bdcc-dcf8bb246761"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presupuesto:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="283" y="19" width="272" height="20" uuid="a8489c57-b31b-4cfc-b2b7-7bb55add6dd1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Artrezzo Soluciones Escénicas Integrales]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="39" width="207" height="20" uuid="71d90b86-4412-4ea8-92a8-078bb3828b2a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[685347400 - 648716712 - 678129959]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="59" width="245" height="20" uuid="580eec16-797e-48dd-b2c5-d78549758d31"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[artrezzosolucionesescenicasintegrales@gmail.com]]></text>
+			</staticText>
 		</band>
 	</title>
 	<pageHeader>
