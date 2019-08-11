@@ -42,13 +42,16 @@ public class ReportePresupuesto {
         this.iva = iva;
         this.totalIva = totalIva;
     }
-     public ReportePresupuesto(int presupuestoId, String presupuestoNombre, String nombreCliente, String dniCifCliente, String direccionCliente, int telefonoCliente, double total, double iva, double totalIva) {
+     public ReportePresupuesto(int presupuestoId, String presupuestoNombre, String nombreCliente, String dniCifCliente, String direccionCliente, int telefonoCliente) {
         this.presupuestoId = presupuestoId;
         this.presupuestoNombre = presupuestoNombre;
         this.nombreCliente = nombreCliente;
         this.dniCifCliente = dniCifCliente;
         this.direccionCliente = direccionCliente;
         this.telefonoCliente = telefonoCliente;
+    }
+     
+     public ReportePresupuesto( double total, double iva, double totalIva) {
         this.total = total;
         this.iva = iva;
         this.totalIva = totalIva;

@@ -585,26 +585,36 @@ public class CrearPresupuesto extends javax.swing.JFrame {
             presupuesto.setPresupuestoTotal(presupuestos.get(x).getPresupuestoTotal());
         }
         
-        double total = Math.round(presupuesto.getPresupuestoTotal()* Math.pow(10, 2));
-        double iva =  Math.round(((total*21)/100)* Math.pow(10, 2));
-        double totalIva = Math.round((total + iva)* Math.pow(10, 2));
-        ReportePresupuesto reporte1 = new ReportePresupuesto(presupuesto.getPresupuestoId(), presupuesto.getPresupuestoTrabajo(), cliente.getClienteNombre(), cliente.getDniCif(), cliente.getClienteDireccion(),cliente.getClienteTelefono(),total, iva, totalIva);
-        lista.add(reporte1);
+        ReportePresupuesto reporte1 = new ReportePresupuesto(presupuesto.getPresupuestoId(), presupuesto.getPresupuestoTrabajo(), cliente.getClienteNombre(), cliente.getDniCif(), cliente.getClienteDireccion(),cliente.getClienteTelefono());
+        lista.add(reporte1); 
         
         List<LineaPresMaterial> lineasMat = opeLinMat.buscarLinea(presupuesto);
         for(Object o : lineasMat){
             LineaPresMaterial linea = (LineaPresMaterial) o;
-            ReportePresupuesto reporte = new ReportePresupuesto(linea.getConcepto(),linea.getPrecio(), linea.getCantidad(), linea.getSubtotal());
-            lista.add(reporte);
+            if(linea.getCantidad()!=0){
+                ReportePresupuesto reporte = new ReportePresupuesto(linea.getConcepto(),linea.getPrecio(), linea.getCantidad(), linea.getSubtotal());
+                lista.add(reporte);  
+            }
         }
        
         List<LineaPresTrabajo> lineasTra = opeLinTra.buscarLinea(presupuesto);
         for(Object o : lineasTra){
             LineaPresTrabajo linea = (LineaPresTrabajo) o;
-            ReportePresupuesto reporte = new ReportePresupuesto(linea.getConcepto(),linea.getPrecio(), linea.getCantidad(), linea.getTotalLinea());
-            lista.add(reporte);
+            if(linea.getCantidad()!=0){
+                ReportePresupuesto reporte = new ReportePresupuesto(linea.getConcepto(),linea.getPrecio(), linea.getCantidad(), linea.getTotalLinea());
+                lista.add(reporte);
+            }
         }
-        File file = new File("C:\\Users\\USUARIO\\Documents\\NetBeansProjects\\ArtrezzoCRM\\src\\Reportes\\ReportePresupuesto.jasper");
+        
+        double total;
+        total = presupuesto.getPresupuestoTotal();
+        double iva =  total*21/100;
+        double totalIva = total + iva;
+        ReportePresupuesto reporte2 = new ReportePresupuesto(total, iva, totalIva);
+        lista.add(reporte2); 
+        
+        
+        File file = new File("src\\Reportes\\ReportePresupuesto.jasper");
         try{
             JasperReport reporte = (JasperReport) JRLoader.loadObject(file);//JasperCompileManager.compileReport("src/Reportes/ReportePresupuesto.jrxml");
             JasperPrint  print = JasperFillManager.fillReport(reporte, null, new JRBeanCollectionDataSource(lista));

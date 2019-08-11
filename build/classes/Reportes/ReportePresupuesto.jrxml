@@ -2,19 +2,19 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b9383500-c490-4b20-9002-d9f3e2213d08">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="48"/>
-	<field name="presupuestoId" class="java.lang.String"/>
+	<property name="ireport.y" value="0"/>
+	<field name="presupuestoId" class="java.lang.Integer"/>
 	<field name="nombreCliente" class="java.lang.String"/>
 	<field name="dniCifCliente" class="java.lang.String"/>
 	<field name="direccionCliente" class="java.lang.String"/>
-	<field name="telefonoCliente" class="java.lang.String"/>
+	<field name="telefonoCliente" class="java.lang.Integer"/>
 	<field name="concepto" class="java.lang.String"/>
-	<field name="precio" class="java.lang.String"/>
-	<field name="cantidad" class="java.lang.String"/>
-	<field name="subtotal" class="java.lang.String"/>
-	<field name="total" class="java.lang.String"/>
-	<field name="iva" class="java.lang.String"/>
-	<field name="totalIva" class="java.lang.String"/>
+	<field name="precio" class="java.lang.Double"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<field name="subtotal" class="java.lang.Double"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="iva" class="java.lang.Double"/>
+	<field name="totalIva" class="java.lang.Double"/>
 	<field name="presupuestoNombre" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -115,7 +115,7 @@
 				</textElement>
 				<text><![CDATA[Teléfono:]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="false">
 				<reportElement x="58" y="79" width="142" height="20" uuid="6e454ac4-4eb1-4c18-8467-aff571d39cd0"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{telefonoCliente}]]></textFieldExpression>
