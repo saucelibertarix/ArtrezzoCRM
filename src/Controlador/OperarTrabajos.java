@@ -154,6 +154,26 @@ public class OperarTrabajos {
         }
         return listaResultados;
     }
+    
+     public Trabajo buscarTrabajo(String trabajoNombre){
+        Trabajo trabajo = new Trabajo();
+       
+        SessionFactory sesionFact =  NewHibernateUtil.getSessionFactory();
+        Session sesion;
+        sesion = sesionFact.openSession();
+        sesion.beginTransaction();
+        String consulta = "FROM Trabajo t WHERE t.trabajoNombre='"+trabajoNombre+"'";
+        Query query  = sesion.createQuery(consulta);
+        List<Trabajo> lista = query.list();
+        trabajo.setTrabajoId(lista.get(0).getTrabajoId());
+        trabajo.setTrabajoNombre(lista.get(0).getTrabajoNombre());
+        trabajo.setTrabajoDescripcion(lista.get(0).getTrabajoDescripcion());
+        trabajo.setPrecioHora(lista.get(0).getPrecioHora());
+        sesion.getTransaction().commit();
+           
+        return trabajo;
+    }
+    
     public List listarTrabajos(){
         List <Trabajo> trabajos;
         SessionFactory sesionFact = NewHibernateUtil.getSessionFactory();

@@ -163,6 +163,28 @@ public class OperarMateriales {
         }
         return listaResultados;
     }
+    
+    public Material buscarMaterial(String materialNombre){
+        Material material = new Material();
+       
+        SessionFactory sesionFact =  NewHibernateUtil.getSessionFactory();
+        Session sesion;
+        sesion = sesionFact.openSession();
+        sesion.beginTransaction();
+        String consulta = "FROM Material m WHERE m.materialNombre='"+materialNombre
+                +"'";
+        Query query  = sesion.createQuery(consulta);
+        List<Material> lista = query.list();
+        material.setMaterialRef(lista.get(0).getMaterialRef());
+        material.setMaterialNombre(lista.get(0).getMaterialNombre());
+        material.setProveedor(lista.get(0).getProveedor());
+        material.setMaterialComentario(lista.get(0).getMaterialComentario());
+        material.setMaterialPrecio(lista.get(0).getMaterialPrecio());
+        sesion.getTransaction().commit();
+
+        return material;
+    }
+    
      public List listarMateriales(){
         List <Material> materiales;
         SessionFactory sesionFact = NewHibernateUtil.getSessionFactory();

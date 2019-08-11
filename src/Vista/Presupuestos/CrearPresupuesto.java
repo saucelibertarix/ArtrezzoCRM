@@ -19,7 +19,6 @@ import Modelo.Presupuesto;
 import Modelo.Trabajo;
 import Reportes.ReportePresupuesto;
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -27,7 +26,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -370,16 +368,9 @@ public class CrearPresupuesto extends javax.swing.JFrame {
         }else if(clienteNombre.equals("--Seleccionar Cliente--")){
             JOptionPane.showMessageDialog(rootPane, "Antes debeSeleccionar un Cliente");
         }else{
-            List<Cliente> clientes = opeCli.buscarClientePorNombre(clienteNombre);
-            Cliente cliente = new Cliente();
-            for(int x=0;x<clientes.size();x++){
-                cliente.setClienteId(clientes.get(x).getClienteId());
-                cliente.setClienteNombre(clientes.get(x).getClienteNombre());
-                cliente.setDniCif(clientes.get(x).getDniCif());
-                cliente.setClienteDireccion(clientes.get(x).getClienteDireccion());
-                cliente.setClienteTelefono(clientes.get(x).getClienteTelefono());
-            }
-            List<Presupuesto> presupuestosCheck = opePre.buscarPresupuesto(cliente.getClienteId(), concepto);
+            Cliente cliente = opeCli.buscarCliente(clienteNombre);
+            
+            List<Presupuesto> presupuestosCheck = opePre.buscarPresupuestos(cliente.getClienteId(), concepto);
             if(presupuestosCheck.isEmpty()){
                 opePre.crearPresupuesto(cliente, concepto, total);
             }
@@ -388,26 +379,10 @@ public class CrearPresupuesto extends javax.swing.JFrame {
             int cantidad = Integer.parseInt(txt_cre_pre_can_mat.getText());
             String nombreCliente = (String) cmb_cre_pre_cli.getSelectedItem();
 
-            int clienteId = opeCli.buscarClienteIdPorNombre(nombreCliente);
-            List<Presupuesto> presupuestos = opePre.buscarPresupuesto(clienteId, concepto);
-            Presupuesto presupuesto = new Presupuesto();
-            for(int x=0; x<presupuestos.size();x++){
+            int clienteId = cliente.getClienteId();
+            Presupuesto presupuesto = opePre.buscarPresupuesto(clienteId, concepto);
 
-                presupuesto.setPresupuestoId(presupuestos.get(x).getPresupuestoId());
-                presupuesto.setCliente(presupuestos.get(x).getCliente());
-                presupuesto.setPresupuestoTrabajo(presupuestos.get(x).getPresupuestoTrabajo());
-                presupuesto.setPresupuestoTotal(presupuestos.get(x).getPresupuestoTotal());
-            }
-
-            List<Material> materiales = operarMat.buscarMaterialPorNombre(nombreMaterial);
-            Material material = new Material();
-            for(int x=0; x<materiales.size();x++){
-
-                material.setMaterialNombre(materiales.get(x).getMaterialNombre());
-                material.setMaterialRef(materiales.get(x).getMaterialRef());
-                material.setMaterialComentario(materiales.get(x).getMaterialComentario());
-                material.setMaterialPrecio(materiales.get(x).getMaterialPrecio());
-            }
+            Material material = operarMat.buscarMaterial(nombreMaterial);
 
             String concept = material.getMaterialNombre();
             double precio = material.getMaterialPrecio();
@@ -481,39 +456,17 @@ public class CrearPresupuesto extends javax.swing.JFrame {
         }else if(clienteNombre.equals("--Seleccionar Cliente--")){
             JOptionPane.showMessageDialog(rootPane, "Antes debeSeleccionar un Cliente");
         }else{
-            List<Cliente> clientes = opeCli.buscarClientePorNombre(clienteNombre);
-            Cliente cliente = new Cliente();
-            for(int x=0;x<clientes.size();x++){
-                cliente.setClienteId(clientes.get(x).getClienteId());
-                cliente.setClienteNombre(clientes.get(x).getClienteNombre());
-                cliente.setDniCif(clientes.get(x).getDniCif());
-                cliente.setClienteDireccion(clientes.get(x).getClienteDireccion());
-                cliente.setClienteTelefono(clientes.get(x).getClienteTelefono());
-            }
-        
-            List<Presupuesto> presupuestosCheck = opePre.buscarPresupuesto(cliente.getClienteId(), concepto);
+           Cliente cliente = opeCli.buscarCliente(clienteNombre);
+
+            List<Presupuesto> presupuestosCheck = opePre.buscarPresupuestos(cliente.getClienteId(), concepto);
                 if(presupuestosCheck.isEmpty()){
                     opePre.crearPresupuesto(cliente, concepto, total);
                 }
 
-            int clienteId = opeCli.buscarClienteIdPorNombre(clienteNombre);
-            List<Presupuesto> presupuestos = opePre.buscarPresupuesto(clienteId, concepto);
-            Presupuesto presupuesto = new Presupuesto();
-            for(int x=0; x<presupuestos.size();x++){
-                presupuesto.setPresupuestoId(presupuestos.get(x).getPresupuestoId());
-                presupuesto.setCliente(presupuestos.get(x).getCliente());
-                presupuesto.setPresupuestoTrabajo(presupuestos.get(x).getPresupuestoTrabajo());
-                presupuesto.setPresupuestoTotal(presupuestos.get(x).getPresupuestoTotal());
-            }
+            int clienteId = cliente.getClienteId();
+            Presupuesto presupuesto = opePre.buscarPresupuesto(clienteId, concepto);
 
-            List<Trabajo> trabajos = opeTra.buscarTrabajoPorNombre(nombreTrabajo);
-            Trabajo trabajo= new Trabajo();
-            for(int x=0;x<trabajos.size();x++){
-                trabajo.setTrabajoNombre(trabajos.get(x).getTrabajoNombre());
-                trabajo.setTrabajoId(trabajos.get(x).getTrabajoId());
-                trabajo.setTrabajoDescripcion(trabajos.get(x).getTrabajoDescripcion());
-                trabajo.setPrecioHora(trabajos.get(x).getPrecioHora());
-            }
+            Trabajo trabajo = opeTra.buscarTrabajo(nombreTrabajo);
 
             String concept = trabajo.getTrabajoNombre();
             double precio = trabajo.getPrecioHora();
@@ -565,33 +518,18 @@ public class CrearPresupuesto extends javax.swing.JFrame {
         OperarLineaPresTrabajo opeLinTra = new OperarLineaPresTrabajo();
         OperarPresupuestos opePre = new OperarPresupuestos();
         
-        List<Cliente> clientes = opeCli.buscarClientePorNombre(clienteNombre);
-        Cliente cliente = new Cliente();
-        for(int x=0;x<clientes.size();x++){
-            cliente.setClienteId(clientes.get(x).getClienteId());
-            cliente.setClienteNombre(clientes.get(x).getClienteNombre());
-            cliente.setDniCif(clientes.get(x).getDniCif());
-            cliente.setClienteDireccion(clientes.get(x).getClienteDireccion());
-            cliente.setClienteTelefono(clientes.get(x).getClienteTelefono());
-        }
+        Cliente cliente = opeCli.buscarCliente(clienteNombre);
         
-        int clienteId = opeCli.buscarClienteIdPorNombre(clienteNombre);
-        List<Presupuesto> presupuestos = opePre.buscarPresupuesto(clienteId, concepto);
-        Presupuesto presupuesto = new Presupuesto();
-        for(int x=0; x<presupuestos.size();x++){
-            presupuesto.setPresupuestoId(presupuestos.get(x).getPresupuestoId());
-            presupuesto.setCliente(presupuestos.get(x).getCliente());
-            presupuesto.setPresupuestoTrabajo(presupuestos.get(x).getPresupuestoTrabajo());
-            presupuesto.setPresupuestoTotal(presupuestos.get(x).getPresupuestoTotal());
-        }
-        
+        int clienteId = cliente.getClienteId();
+        Presupuesto presupuesto = opePre.buscarPresupuesto(clienteId, concepto);
+         
         ReportePresupuesto reporte1 = new ReportePresupuesto(presupuesto.getPresupuestoId(), presupuesto.getPresupuestoTrabajo(), cliente.getClienteNombre(), cliente.getDniCif(), cliente.getClienteDireccion(),cliente.getClienteTelefono());
         lista.add(reporte1); 
         
         List<LineaPresMaterial> lineasMat = opeLinMat.buscarLinea(presupuesto);
         for(Object o : lineasMat){
             LineaPresMaterial linea = (LineaPresMaterial) o;
-            if(linea.getCantidad()!=0){
+            if(linea.getCantidad()!= 0){
                 ReportePresupuesto reporte = new ReportePresupuesto(linea.getConcepto(),linea.getPrecio(), linea.getCantidad(), linea.getSubtotal());
                 lista.add(reporte);  
             }

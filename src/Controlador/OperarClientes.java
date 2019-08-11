@@ -172,6 +172,27 @@ public class OperarClientes {
         return listaResultados;
     }
     
+     public Cliente buscarCliente(String clienteBusqueda){
+        Cliente cliente = new Cliente();
+       
+        SessionFactory sesionFact =  NewHibernateUtil.getSessionFactory();
+        Session sesion;
+        sesion = sesionFact.openSession();
+        sesion.beginTransaction();
+        String consulta = "FROM Cliente WHERE clienteNombre LIKE '%"+clienteBusqueda
+                +"%'";
+        Query query  = sesion.createQuery(consulta);
+        List<Cliente> lista = query.list();
+        cliente.setClienteId(lista.get(0).getClienteId());
+        cliente.setClienteNombre(lista.get(0).getClienteNombre());
+        cliente.setDniCif(lista.get(0).getDniCif());
+        cliente.setClienteDireccion(lista.get(0).getClienteDireccion());
+        cliente.setClienteTelefono(lista.get(0).getClienteTelefono());
+        sesion.getTransaction().commit();
+
+        return cliente;
+    }
+    
     public List listarClientes(){
         List <Cliente> clientes;
         SessionFactory sesionFact = NewHibernateUtil.getSessionFactory();

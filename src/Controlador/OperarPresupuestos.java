@@ -76,7 +76,7 @@ public class OperarPresupuestos {
         }      
     }
     
-    public List buscarPresupuesto(int clienteBusqueda, String presupuestoTrabajo){
+    public List buscarPresupuestos(int clienteBusqueda, String presupuestoTrabajo){
         List<Presupuesto> listaResultados = null;
         if(clienteBusqueda == 0){
             if(presupuestoTrabajo.isEmpty()){
@@ -122,6 +122,26 @@ public class OperarPresupuestos {
             }
         }
         return listaResultados;
+    }
+    
+     public Presupuesto buscarPresupuesto(int clienteBusqueda, String presupuestoTrabajo){
+        Presupuesto presupuesto = new Presupuesto();
+       
+        SessionFactory sesionFact =  NewHibernateUtil.getSessionFactory();
+        Session sesion;
+        sesion = sesionFact.openSession();
+        sesion.beginTransaction();
+        String consulta = "FROM Presupuesto p WHERE p.cliente.clienteId='"+clienteBusqueda+"' "
+        + "AND p.presupuestoTrabajo LIKE '%"+presupuestoTrabajo+"%'";
+        Query query  = sesion.createQuery(consulta);
+        List<Presupuesto> lista = query.list();
+        presupuesto.setPresupuestoId(lista.get(0).getPresupuestoId());
+        presupuesto.setCliente(lista.get(0).getCliente());
+        presupuesto.setPresupuestoTrabajo(lista.get(0).getPresupuestoTrabajo());
+        presupuesto.setPresupuestoTotal(lista.get(0).getPresupuestoTotal());
+        sesion.getTransaction().commit();
+           
+        return presupuesto;
     }
     
     public void calcularTotal(Presupuesto presupuesto){
