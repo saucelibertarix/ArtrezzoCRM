@@ -26,6 +26,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -553,14 +554,29 @@ public class CrearPresupuesto extends javax.swing.JFrame {
         
         
         File file = new File("src\\Reportes\\ReportePresupuesto.jasper");
-        try{
-            JasperReport reporte = (JasperReport) JRLoader.loadObject(file);//JasperCompileManager.compileReport("src/Reportes/ReportePresupuesto.jrxml");
-            JasperPrint  print = JasperFillManager.fillReport(reporte, null, new JRBeanCollectionDataSource(lista));
-            JasperViewer view = new JasperViewer(print, false);
-            view.setVisible(true);
-            view.setTitle("Presupuesto:");
-        }catch(JRException e){
-            e.printStackTrace();
+        
+        
+        if(file.exists()){
+            try{
+                JasperReport reporte = (JasperReport) JRLoader.loadObject(file);//(getClass().getResource("Reportes\\ReportePresupuesto.jasper"));;//JasperCompileManager.compileReport("src/Reportes/ReportePresupuesto.jrxml");
+                JasperPrint  print = JasperFillManager.fillReport(reporte, null, new JRBeanCollectionDataSource(lista));
+                JasperViewer view = new JasperViewer(print, false);
+                view.setVisible(true);
+                view.setTitle("Guardar Presupuesto:");
+            }catch(JRException e){
+                e.printStackTrace();
+            }
+        }else{
+            File file2 = new File("ReportePresupuesto.jasper");
+            try{
+                JasperReport reporte = (JasperReport) JRLoader.loadObject(file2);//(getClass().getResource("Reportes\\ReportePresupuesto.jasper"));;//JasperCompileManager.compileReport("src/Reportes/ReportePresupuesto.jrxml");
+                JasperPrint  print = JasperFillManager.fillReport(reporte, null, new JRBeanCollectionDataSource(lista));
+                JasperViewer view = new JasperViewer(print, false);
+                view.setVisible(true);
+                view.setTitle("Guardar Presupuesto:");
+            }catch(JRException e){
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_btm_cre_pre_impActionPerformed
 

@@ -60,16 +60,31 @@ public class OperarPresupuestos {
         }      
     }
     
-    public void borrarFactura(int presupuestoId){
+    public void borrarPresupuesto(int presupuestoId){
          try{
             SessionFactory sesionFact = NewHibernateUtil.getSessionFactory();
             Session sesion;
             sesion = sesionFact.openSession();
             sesion.beginTransaction();
+            String consulta2 = "DELETE FROM LineaPresMaterial lpm "
+                                            + "WHERE lpm.presupuesto.presupuestoId = '"+presupuestoId+"'";
+            Query query2 = sesion.createQuery(consulta2);
+            query2.executeUpdate();
+            sesion.getTransaction().commit();
+            sesion.beginTransaction();
+            String consulta3 = "DELETE FROM LineaPresTrabajo lpt "
+                                            + "WHERE lpt.presupuesto.presupuestoId = '"+presupuestoId+"'";
+            Query query3 = sesion.createQuery(consulta3);
+            query3.executeUpdate();
+            sesion.getTransaction().commit();
+            
+            sesion.beginTransaction();
             String consulta = "DELETE FROM Presupuesto p "
                                             + "WHERE p.presupuestoId = '"+presupuestoId+"'";
             Query query = sesion.createQuery(consulta);
             query.executeUpdate();
+            
+            
             sesion.getTransaction().commit();
         }catch(HibernateException ex){
             ex.printStackTrace();

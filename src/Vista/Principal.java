@@ -290,6 +290,11 @@ public class Principal extends javax.swing.JFrame {
         men_pre.add(jSeparator3);
 
         men_pre_bus.setText("Buscar Presupuesto");
+        men_pre_bus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                men_pre_busActionPerformed(evt);
+            }
+        });
         men_pre.add(men_pre_bus);
         men_pre.add(jSeparator16);
 
@@ -367,7 +372,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_men_pre_creActionPerformed
 
     private void men_pre_impActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_men_pre_impActionPerformed
-        ImprimirPresupuesto impPres =  new ImprimirPresupuesto();
+        BuscarPresupuesto impPres =  new BuscarPresupuesto();
         impPres.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         impPres.setVisible(true);
     }//GEN-LAST:event_men_pre_impActionPerformed
@@ -485,6 +490,12 @@ public class Principal extends javax.swing.JFrame {
         borrarTra.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         borrarTra.setVisible(true);
     }//GEN-LAST:event_men_it_brr_traActionPerformed
+
+    private void men_pre_busActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_men_pre_busActionPerformed
+        BuscarPresupuesto busPres =  new BuscarPresupuesto();
+        busPres.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        busPres.setVisible(true);
+    }//GEN-LAST:event_men_pre_busActionPerformed
 
     /**
      * @param args the command line arguments
